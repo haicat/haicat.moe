@@ -9,10 +9,27 @@ const cConnection = require("./config/connection");
 
 
 function httpsDelegate(request, response){
-
+    if(request.headers['host']=="fur.art"){
+		response.writeHead(200, {"Content-Type": "text/plain"});
+		response.write("nothing here yet (:");
+		response.end();
+		return;
+	};
+    if(request.headers['host']=="haicat.moe"){
+		response.writeHead(200, {"Content-Type": "text/plain"});
+		response.write("down for maintenance");
+		response.end();
+		return;
+	};
+	if(url.pathname == "/favicon.ico"){
+		response.writeHead(200, {"Content-Type": "image/x-icon"});
+		var fstream = fs.createReadStream("./static/favicon.ico");
+		fstream.pipe(response);
+		return;
+	}
 };
-//const tlsKey   = fs.readFileSync(cConnection.https.sec.key).toString();
-//const tlsCert  = fs.readFileSync(cConnection.https.sec.cert).toString();
+const tlsKey   = fs.readFileSync(cConnection.https.sec.key).toString();
+const tlsCert  = fs.readFileSync(cConnection.https.sec.cert).toString();
 
 function getStatic(request, response){
     var path = "./static" + request.url.replace("..","").replace("\\","");
@@ -34,8 +51,7 @@ function getStatic(request, response){
 };
 
 function httpDelegate(request, response){
-    getStatic(request, response);
-    //response.writeHead(301, { "Location": "https://" + request.headers["host"] + request.url });
-    //response.end();
+    response.writeHead(301, { "Location": "https://" + request.headers["host"] + request.url });
+    response.end();
 };
 httpServer = http.createServer(httpDelegate).listen(cConnection.http.port);
