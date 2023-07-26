@@ -27,6 +27,10 @@ function httpsDelegate(request, response){
 		fstream.pipe(response);
 		return;
 	}
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.write("uwu");
+    response.end();
+    return;
 };
 const tlsKey   = fs.readFileSync(cConnection.https.sec.key).toString();
 const tlsCert  = fs.readFileSync(cConnection.https.sec.cert).toString();
