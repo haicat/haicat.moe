@@ -5,8 +5,8 @@ module.exports = {
     https:{
         port: 3010,
         sec:{
-            key: '/etc/letsencrypt/live/haicat.moe/privkey.pem',
-            cert: '/etc/letsencrypt/live/haicat.moe/fullchain.pem'
+            key: '/home/haicat/certs/privkey.pem',
+            cert: '/home/haicat/certs/fullchain.pem'
         }
     }
 };
