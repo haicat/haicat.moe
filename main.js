@@ -11,8 +11,8 @@ const cConnection = require("./config/connection");
 function httpsDelegate(request, response){
 
 };
-const tlsKey   = fs.readFileSync(cConnection.https.sec.key).toString();
-const tlsCert  = fs.readFileSync(cConnection.https.sec.cert).toString();
+//const tlsKey   = fs.readFileSync(cConnection.https.sec.key).toString();
+//const tlsCert  = fs.readFileSync(cConnection.https.sec.cert).toString();
 
 function getStatic(request, response){
     var path = "./static" + request.url.replace("..","").replace("\\","");
