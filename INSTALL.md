@@ -68,4 +68,6 @@ relog
 nvm install node --latest-npm
 ```
 
+ALSO FUCKING UNINSTALL APACHE2 AAAAAA IT CAME PREINSTALLED FUCK
+
 # section 2: uwu
