@@ -1,5 +1,6 @@
 const requireDir        = require("require-dir");
 const http              = require("http");
+const https             = require("https");
 const fs                = require("fs");
 const express           = require("express");
 const expressApp        = express();
@@ -36,6 +37,13 @@ const tlsKey   = fs.readFileSync(cConnection.https.sec.key).toString();
 const tlsCert  = fs.readFileSync(cConnection.https.sec.cert).toString();
 
 var httpsServer = https.createServer({key: tlsKey, cert: tlsCert}, httpsDelegate);
+
+httpsServer.listen(cConnection.https.port, function(err){
+    if (err) {
+        return console.log('[ERR] ', err);
+    }
+    console.log(`Server started on ${cConnection.https.port}`);
+});
 
 function getStatic(request, response){
     var path = "./static" + request.url.replace("..","").replace("\\","");
