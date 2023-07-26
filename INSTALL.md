@@ -70,4 +70,11 @@ nvm install node --latest-npm
 
 ALSO FUCKING UNINSTALL APACHE2 AAAAAA IT CAME PREINSTALLED FUCK
 
+## oh god the firewall
+```bash
+sudo apt-get install libcap2-bin
+sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``
+```
+keep in mind that `which node` might be returning blank when run with sudo (nvm installed it for us, not root)
+
 # section 2: uwu

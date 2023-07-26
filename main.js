@@ -35,6 +35,8 @@ function httpsDelegate(request, response){
 const tlsKey   = fs.readFileSync(cConnection.https.sec.key).toString();
 const tlsCert  = fs.readFileSync(cConnection.https.sec.cert).toString();
 
+var httpsServer = https.createServer({key: tlsKey, cert: tlsCert}, httpsDelegate);
+
 function getStatic(request, response){
     var path = "./static" + request.url.replace("..","").replace("\\","");
     fs.stat(path, function(err, stat){
