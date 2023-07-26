@@ -4,12 +4,16 @@ const https             = require("https");
 const fs                = require("fs");
 const express           = require("express");
 const expressApp        = express();
+const liburl = require('url');
 
 const cConnection = require("./config/connection");
 
 
 
 function httpsDelegate(request, response){
+    console.log("HIT " + request.headers["host"] + request.url);
+    var url = liburl.parse(request.url, true);
+    url.pathname = url.pathname.replace(/\/+$/, "");
     if(request.headers['host']=="fur.art"){
 		response.writeHead(200, {"Content-Type": "text/plain"});
 		response.write("nothing here yet (:");
@@ -65,6 +69,7 @@ function getStatic(request, response){
 };
 
 function httpDelegate(request, response){
+    console.log("HTTPS REDIR " + request.headers["host"] + request.url);
     response.writeHead(301, { "Location": "https://" + request.headers["host"] + request.url });
     response.end();
 };
