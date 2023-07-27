@@ -6,7 +6,7 @@ module.exports = {
         let host = request.headers['host'];
         for(let i of cConnection.domain){
             if(host.toLowerCase().endsWith(i.toLowerCase())){
-                return d.slice(0,-(i.length+1));
+                return host.slice(0,-(i.length+1));
             }
         }
         return null;
