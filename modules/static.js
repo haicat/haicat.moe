@@ -17,7 +17,7 @@ module.exports = {
                 return;
             } else {
                 response.writeHead(200, {"Content-Type": "text/html"});
-                var fstream = fs.createReadStream("./404.html");
+                var fstream = fs.createReadStream("./static/404.html");
                 fstream.pipe(response);
             }
         });
