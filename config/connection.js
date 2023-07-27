@@ -1,4 +1,5 @@
 module.exports = {
+    domain: ["haicat.moe", "fur.art"], //root level domains only
     http:{
         port: 80
     },

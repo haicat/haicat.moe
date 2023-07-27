@@ -4,16 +4,42 @@ const https             = require("https");
 const fs                = require("fs");
 const express           = require("express");
 const expressApp        = express();
-const liburl = require('url');
+const liburl            = require("url");
+const common            = require("./common");
 
 const cConnection = require("./config/connection");
 
-
+const serverModules = requireDir("./modules");
 
 function httpsDelegate(request, response){
-    console.log("HIT " + request.headers["host"] + request.url);
+    let subdomain = common.domainCheck(request);
+    
+    if(subdomain == null){
+        common.log("MISS (BAD ROOT DOMAIN) " + request.headers["host"] + request.url);
+        response.writeHead(403);
+        response.end();
+        return;
+    }
+
     var url = liburl.parse(request.url, true);
     url.pathname = url.pathname.replace(/\/+$/, "");
+
+    for(let m of serverModules){
+        if(m.match(request, {
+            subdomain: subdomain
+        })){
+            common.log("HIT [" + m.name + "]" + request.headers["host"] + request.url);
+            m.run(request, response, {
+                subdomain: subdomain,
+                url: url
+            });
+            return;
+        }
+    }
+
+    /*
+    common.log("HIT " + request.headers["host"] + request.url);
+
     if(request.headers['host']=="fur.art"){
 		response.writeHead(200, {"Content-Type": "text/plain"});
 		response.write("nothing here yet (:");
@@ -26,12 +52,8 @@ function httpsDelegate(request, response){
 		response.end();
 		return;
 	};
-	if(url.pathname == "/favicon.ico"){
-		response.writeHead(200, {"Content-Type": "image/x-icon"});
-		var fstream = fs.createReadStream("./static/favicon.ico");
-		fstream.pipe(response);
-		return;
-	}
+    */
+
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.write("uwu");
     response.end();
@@ -44,32 +66,15 @@ var httpsServer = https.createServer({key: tlsKey, cert: tlsCert}, httpsDelegate
 
 httpsServer.listen(cConnection.https.port, function(err){
     if (err) {
-        return console.log('[ERR] ', err);
+        return common.log('[ERR] ' + err, 2);
     }
-    console.log(`Server started on ${cConnection.https.port}`);
+    common.log(`Server started on ${cConnection.https.port}`, 2);
 });
 
-function getStatic(request, response){
-    var path = "./static" + request.url.replace("..","").replace("\\","");
-    fs.stat(path, function(err, stat){
-        if(
-              (err==null) && !(fs.lstatSync(path).isDirectory())
-            ){
-            response.writeHead(200, {"Content-Type": mime.getType(path)});
-            var fstream = fs.createReadStream(path);
-            fstream.pipe(response);
-            return;
-        } else {
-          response.writeHead(200, {"Content-Type": "text/html"});
-          var fstream = fs.createReadStream("./404.html");
-          fstream.pipe(response);
-        }
-      });
-      return;
-};
+
 
 function httpDelegate(request, response){
-    console.log("HTTPS REDIR " + request.headers["host"] + request.url);
+    common.log("HTTPS REDIR " + request.headers["host"] + request.url);
     response.writeHead(301, { "Location": "https://" + request.headers["host"] + request.url });
     response.end();
 };
