@@ -9,7 +9,7 @@ const common            = require("./common");
 
 
 const cConnection   = require("./config/connection");
-const serverModules = require("./modules");
+const serverModules = require('requiredir')("./modules").toArray();
 
 
 function httpsDelegate(request, response){
