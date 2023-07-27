@@ -24,16 +24,14 @@ function httpsDelegate(request, response){
 
     var url = liburl.parse(request.url, true);
     url.pathname = url.pathname.replace(/\/+$/, "");
-
+    let extraArgs = {
+        subdomain: subdomain,
+        url: url
+    };
     for(let m of serverModules){
-        if(m.match(request, {
-            subdomain: subdomain
-        })){
+        if(m.match(request, extraArgs)){
             common.log("HIT [" + m.name + "]" + request.headers["host"] + request.url);
-            m.run(request, response, {
-                subdomain: subdomain,
-                url: url
-            });
+            m.run(request, response, extraArgs);
             return;
         }
     }
