@@ -1,4 +1,5 @@
-const mime   = require("mime");
+const mime  = require("mime");
+const fs    = require("fs");
 
 module.exports = {
     name: "static",
