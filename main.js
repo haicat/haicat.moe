@@ -1,4 +1,4 @@
-const requireDir        = require("require-dir");
+const requireDir        = require("requiredir");
 const http              = require("http");
 const https             = require("https");
 const fs                = require("fs");
@@ -7,9 +7,10 @@ const expressApp        = express();
 const liburl            = require("url");
 const common            = require("./common");
 
-const cConnection = require("./config/connection");
 
-const serverModules = requireDir("./modules");
+const cConnection   = require("./config/connection");
+const serverModules = require("./modules");
+
 
 function httpsDelegate(request, response){
     let subdomain = common.domainCheck(request);
