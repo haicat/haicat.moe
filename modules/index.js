@@ -1,1 +1,1 @@
-module.exports = require('requiredir')().toArray();
+module.exports = require('requiredir')(".").toArray();
