@@ -36,28 +36,14 @@ function httpsDelegate(request, response){
         }
     }
 
-    /*
-    common.log("HIT " + request.headers["host"] + request.url);
-
-    if(request.headers['host']=="fur.art"){
-		response.writeHead(200, {"Content-Type": "text/plain"});
-		response.write("nothing here yet (:");
-		response.end();
-		return;
-	};
-    if(request.headers['host']=="haicat.moe"){
-		response.writeHead(200, {"Content-Type": "text/plain"});
-		response.write("down for maintenance");
-		response.end();
-		return;
-	};
-    */
-
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.write("uwu");
     response.end();
     return;
 };
+
+
+////////server setup
 const tlsKey   = fs.readFileSync(cConnection.https.sec.key).toString();
 const tlsCert  = fs.readFileSync(cConnection.https.sec.cert).toString();
 
@@ -69,7 +55,6 @@ httpsServer.listen(cConnection.https.port, function(err){
     }
     common.log(`Server started on ${cConnection.https.port}`, 2);
 });
-
 
 
 function httpDelegate(request, response){
