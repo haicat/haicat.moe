@@ -4,6 +4,9 @@ const cCore = require("./config/core");
 module.exports = {
     domainCheck: function(request){
         let host = request.headers['host'];
+		if(host == undefined){
+			return null;
+		}
         for(let i of cConnection.domain){
             if(host.toLowerCase().endsWith(i.toLowerCase())){
                 return host.slice(0,-(i.length+1));
