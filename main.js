@@ -29,10 +29,15 @@ function httpsDelegate(request, response){
         url: url
     };
     for(let m of serverModules){
-        if(m.match(request, extraArgs)){
-            common.log("HIT [" + m.name + "]" + request.headers["host"] + request.url);
-            m.run(request, response, extraArgs);
-            return;
+        try{
+            if(m.match(request, extraArgs)){
+                common.log("HIT [" + m.name + "]" + request.headers["host"] + request.url);
+                m.run(request, response, extraArgs);
+                return;
+            }
+        }catch(err){
+            common.log("!!!!!!!! Server module error ("+m.name+")\n"+err+"\n!!!!!!!!!");
+            response.end();
         }
     }
 
