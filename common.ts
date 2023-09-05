@@ -10,7 +10,9 @@ export function domainCheck(request: IncomingMessage) : string{
     
     if(cConnection.allowDomainSpoofing){
         let url = liburl.parse(request.url, true);
-        return url.search.slice(1);
+        if(url.search != null){
+            return url.search.slice(1);
+        }
     }
     let host : string = request.headers['host'];
     if(host == undefined){
@@ -32,7 +34,7 @@ export enum logLevel {
     error = 4
 };
 
-export function log(output : string, level : logLevel = logLevel.debug, prefix: string = ""){
+export function log(output : string, level : logLevel = logLevel.debug, prefix: string = "root"){
     if(level < cCore.verbose){return;}
     let decor = "";
     switch(level){
@@ -47,7 +49,7 @@ export function log(output : string, level : logLevel = logLevel.debug, prefix: 
         break;
     }
     console.log(
-        ((cCore.verbose == logLevel.debug)  &&  (prefix!="")
+        ((cCore.verbose == logLevel.debug) 
             ?   CGray + prefix+"]] " + CReset
             :   "")
         + decor + " " + output + CReset);

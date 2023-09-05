@@ -3,7 +3,7 @@
   "description": "uwu",
   "version": "0.0.1",
   "scripts": {
-    "start": "npm run compile && node ./main.js",
+    "start": "npm run compile && node ./build/main.js",
     "compile": "tsc"
   },
   "dependencies": {
