@@ -59,12 +59,8 @@ class daemon{
             let s = service[i];
             s.tick(daemon);
         }
-        setTimeout(heartbeat, cDaemon.heartbeat.interval)
+        setTimeout(this.heartbeat, cDaemon.heartbeat.interval)
     }
 };
-
-for(let i in CODENAME){
-    CODE[CODENAME]
-}
 
 module.exports = new daemon();

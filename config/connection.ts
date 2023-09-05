@@ -1,7 +1,9 @@
-module.exports = {
+export default {
     domain: ["haicat.moe", "fur.art"], //root level domains only
+    secure: false,
+    allowDomainSpoofing: true,
     http:{
-        port: 80
+        port: 8080
     },
     https:{
         port: 443,

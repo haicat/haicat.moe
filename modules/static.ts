@@ -1,13 +1,17 @@
-const mime  = require("mime");
-const fs    = require("fs");
+import { IncomingMessage, ServerResponse } from "http";
+import hai, { haiArgs } from "../hai";
 
-module.exports = {
-    name: "static",
-    match: function(request, extra){
+const mime = require("mime"); //types are broken??
+import * as fs from "fs";
+
+export default class extends hai{
+    name = "static";
+
+    match(request : IncomingMessage, extra : haiArgs){
         return extra.subdomain == "static" || extra.url.pathname == "/favicon.ico";
-    },
+    };
 
-    run: function(request, response){
+    run(request : IncomingMessage, response : ServerResponse, extra : haiArgs){
         var path = "./static" + request.url.replace("..","").replace("\\","");
         fs.stat(path, function(err, stat){
             if((err==null) && !(fs.lstatSync(path).isDirectory())){
@@ -16,11 +20,11 @@ module.exports = {
                 fstream.pipe(response);
                 return;
             } else {
-                response.writeHead(200, {"Content-Type": "text/html"});
+                response.writeHead(404, {"Content-Type": "text/html"});
                 var fstream = fs.createReadStream("./static/404.html");
                 fstream.pipe(response);
             }
         });
         return;
-    }
+    };
 };
