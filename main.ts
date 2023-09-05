@@ -5,12 +5,13 @@ import * as liburl from "url";
 
 import * as common from "./common";
 
+import * as mixer from "mixer";
 
 import cConnection from "./config/connection";
 import hai, { haiArgs } from "./hai";
 import * as modules from "./modules";
 
-let serverModules = [new modules.static(), new modules.art()];
+let serverModules = [new modules.static(), new modules.art(), new mixer.default()];
 
 const server : hai = new class extends hai{
     name = "*";

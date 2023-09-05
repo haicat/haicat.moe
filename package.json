@@ -11,6 +11,7 @@
     "discord.js": "^14.11.0",
     "file-type": "^18.5.0",
     "mime": "^3.0.0",
+    "mixer": "mixer.haicat.moe-1.0.0.tgz",
     "node-fetch": "^3.3.2",
     "peer": "^1.0.0"
   },
