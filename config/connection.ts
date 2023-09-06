@@ -1,7 +1,7 @@
 export default {
     domain: ["haicat.moe", "fur.art"], //root level domains only
     secure: true,
-    allowDomainSpoofing: false,
+    domainSpoof: null,
     http:{
         port: 8080
     },

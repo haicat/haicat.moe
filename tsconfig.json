@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es2020",
         "module": "commonjs",
-        "declaration": false,
+        "declaration": true,
         "noImplicitAny": false,
         "removeComments": true,
         "noLib": false,
@@ -16,5 +16,6 @@
     ],
     "exclude": [
         "node_modules",
+        "build",
         "**/*.spec.ts"
     ]}

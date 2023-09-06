@@ -11,7 +11,7 @@ import cConnection from "./config/connection";
 import hai, { haiArgs } from "./hai";
 import * as modules from "./modules";
 
-let serverModules = [new modules.static(), new modules.art(), new mixer.default()];
+let serverModules = null;
 
 const server : hai = new class extends hai{
     name = "*";
@@ -92,6 +92,10 @@ if(cConnection.secure){
     });
 }
 
-if(cConnection.allowDomainSpoofing == true){
+serverModules = [new modules.static(), new modules.art(), new mixer.default(webServer)];
+
+if(cConnection.domainSpoof != null){
     common.log("DOMAIN SPOOFING IS ENABLED. DO NOT USE THIS IN PRODUCTION", common.logLevel.warning);
+    common.log("Spoofing as " + cConnection.domainSpoof, common.logLevel.routine);
 }
+

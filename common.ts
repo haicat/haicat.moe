@@ -8,11 +8,8 @@ const strictMode : boolean = (function() { return !this; })();
 
 export function domainCheck(request: IncomingMessage) : string{
     
-    if(cConnection.allowDomainSpoofing){
-        let url = liburl.parse(request.url, true);
-        if(url.search != null){
-            return url.search.slice(1);
-        }
+    if(cConnection.domainSpoof != null){
+        return cConnection.domainSpoof;
     }
     let host : string = request.headers['host'];
     if(host == undefined){
